@@ -14,12 +14,12 @@ Output.txt file containing:
 (g++ main.cpp personType.cpp -o program 2>&1; ./program 2>&1) > output.txt
 ```
 ### Part-by-part Breakdown:
-1. The Parentheses `bash ()`
+1. The Parentheses `()`
     - Creates a subshell (a new shell process)
     - Everything inside the parenthese is treated as a single unit
-    - The final `bash > output` applies to all outputs from everything inside
+    - The final `> output` applies to all outputs from everything inside
     
-2. `bash g++ main.cpp personType.cpp -o program`
+2. `g++ main.cpp personType.cpp -o program`
     - Compile the C++ files
     - Output: Creates executable named `program` (if successful)
     
@@ -49,11 +49,12 @@ So compilation erros that normally go to stderr will be merged with stdout.
     - Overwrites the file if it exists
 
 ### Visual Flow:
+```bash
 Compilation errors ──┐
 Compilation output ──┼── stdout ──┐
 Program output ──────┘            ├── output.txt
 Runtime errors ───────────────────┘
-
+```
 
 ## Windows command prompt commands:
 ```bash
