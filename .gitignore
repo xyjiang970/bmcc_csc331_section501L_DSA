@@ -1,0 +1,12 @@
+# Include
+!.gitignore_global
+!.gitignore
+
+# Exclude:
+.env
+.DS_store
+node_modules/
+.ipynb_checkpoints/
+.vscode
+.xcodeproj
+.dSYM
