@@ -74,6 +74,22 @@ or (2) “book not removed”.
 */
 
 /*
+Order – To order a quantity of books, process a transaction in the form of “O”,
+space, ID, space, quantity. For example: “O 10 7”.  If the book ID is not on the
+linked list, the transaction will fail.  If the book ID is on the list, the quantity for
+the book will be increased by the quantity amount on the transaction. One of
+two messages will be displayed: (1) “order added” or (2) “order not added”.
+*/
+
+/*
+Sell – To sell a quantity of books, process a transaction in the form of “S”, space,
+ID, space, quantity. For example: “S 10 7”.  If the book ID is not on the linked list,
+the transaction will fail.  If the book ID is on the list, the quantity amount for the
+book will be decreased by the quantity amount on the transaction. One of two
+messages will be displayed: (1) “books sold” or (2) “books not sold”.
+*/
+
+/*
 List – To display the books in a numbered list, enter a transaction in the form of
 “L”.  Each book (ID, title and quantity) in the linked list will be displayed next to a
 sequential number. Each book will be on a line by itself.
@@ -99,3 +115,7 @@ book_f25::book_f25()
 {
   first = NULL;
 }
+
+/*
+Quit – To terminate the program, enter a transaction in the form of “Q”.
+*/
