@@ -1,5 +1,5 @@
 /*
-csc331-section_501L prog1 xin yu (jason) jiang
+csc331-section_501L prog1 Xin Yu (Jason) Jiang
 assignment_2
 due date Oct 10th, 2025
 */
@@ -12,18 +12,19 @@ int main()
 {
     book_f25 bookList; // Create book list object
     string transaction;
-
     while (true)
     {
+        // get transactions input from user
         cout << "enter transaction: ";
         getline(cin, transaction);
 
-        // Parse transaction and call appropriate methods
+        // Get specific transaction
         char command = transaction[0];
 
         switch (command)
         {
         // Add book
+        // Format: "A" "ID" "Title"
         case 'A':
             // Parse ID and title, call bookList.addBook()
             // Display "book added" or "book not added"
