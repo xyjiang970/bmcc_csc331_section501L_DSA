@@ -15,38 +15,102 @@ int main()
     while (true)
     {
         // get transactions input from user
-        cout << "enter transaction: ";
-        getline(cin, transaction);
+        std::cout << "enter transaction: ";
+        std::getline(cin, transaction);
 
-        // Get specific transaction
+        if (transaction.empty())
+            continue; // skip empty lines
+
+        // Adds new line for cleaner output formatting
+        std::cout << std::endl;
+
+        // Get specific transaction (A, R, O, S, L, Q)
         char command = transaction[0];
 
         switch (command)
         {
         // Add book
-        // Format: "A" "ID" "Title"
         case 'A':
-            // Parse ID and title, call bookList.addBook()
-            // Display "book added" or "book not added"
+        {
+            // Find first space (after 'A')
+            size_t pos1 = transaction.find(' ');
+            // Find second space (after ID)
+            size_t pos2 = transaction.find(' ', pos1 + 1);
+
+            // Extract ID substring and convert to int
+            string idStr = transaction.substr(pos1 + 1, pos2 - pos1 - 1);
+            int bookID = stoi(idStr);
+
+            // Extract title (everything after second space)
+            string title = transaction.substr(pos2 + 1);
+
+            if (bookList.addBook(bookID, title))
+                std::cout << "book added" << std::endl;
+            else
+                std::cout << "book not added" << std::endl;
             break;
+        }
 
         // Remove book
         case 'R':
-            // Parse ID, call bookList.removeBook()
-            // Display "book removed" or "book not removed"
+        {
+            // Find space after 'R'
+            size_t pos = transaction.find(' ');
+
+            // Extract ID and convert to int
+            string idStr = transaction.substr(pos + 1);
+            int bookID = stoi(idStr);
+
+            if (bookList.removeBook(bookID))
+                std::cout << "book removed" << std::endl;
+            else
+                std::cout << "book not removed" << std::endl;
             break;
+        }
 
         // Order books
         case 'O':
-            // Parse ID and quantity, call bookList.orderBooks()
-            // Display "books ordered" or "books not ordered"
+        {
+            // Find first space (after 'O')
+            size_t pos1 = transaction.find(' ');
+            // Find second space (after ID)
+            size_t pos2 = transaction.find(' ', pos1 + 1);
+
+            // Extract ID and quantity
+            string idStr = transaction.substr(pos1 + 1, pos2 - pos1 - 1);
+            string qtyStr = transaction.substr(pos2 + 1);
+
+            int bookID = stoi(idStr);
+            int quantity = stoi(qtyStr);
+
+            if (bookList.orderBooks(bookID, quantity))
+                std::cout << "books ordered" << std::endl;
+            else
+                std::cout << "books not ordered" << std::endl;
             break;
+        }
 
         // Sell books
         case 'S':
-            // Parse ID and quantity, call bookList.sellBooks()
-            // Display "books sold" or "books not sold"
+        {
+            // Find first space (after 'S')
+            size_t pos1 = transaction.find(' ');
+            // Find second space (after ID)
+            size_t pos2 = transaction.find(' ', pos1 + 1);
+
+            // Extract ID and quantity
+            string idStr = transaction.substr(pos1 + 1, pos2 - pos1 - 1);
+            string qtyStr = transaction.substr(pos2 + 1);
+
+            int bookID = stoi(idStr);
+            int quantity = stoi(qtyStr);
+
+            if (bookList.sellBooks(bookID, quantity))
+                std::cout << "books sold" << std::endl;
+            else
+                std::cout << "books not sold" << std::endl;
             break;
+        }
 
         // List books
         case 'L':
@@ -56,19 +120,12 @@ int main()
         // Quit
         case 'Q':
             return 0;
+
+        default:
+            std::cout << "Invalid transaction" << std::endl;
+            break;
         }
     }
-
-    /*
-    Program will wait for the user to press a key before continuing,
-    which will give you time to examine your program’s output before your
-    operating system closes the console window.
-    */
-    std::cin.clear(); // reset any error flags
-    // ignore any characters in the input buffer until we find an enter character
-    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-    std::cout << "Press Enter key to exit..." << std::endl;
-    std::cin.get(); // get one more char from the user
 
     return 0;
 }

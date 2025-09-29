@@ -1,0 +1,20 @@
+enter transaction: 
+book added
+enter transaction: 
+book not added
+enter transaction: 
+book added
+enter transaction: 
+1. 10 book1  0
+2. 20 book3  0
+enter transaction: 
+book not removed
+enter transaction: 
+book removed
+enter transaction: 
+books not ordered
+enter transaction: 
+books ordered
+enter transaction: 
+1. 20 book3  7
+enter transaction: 
