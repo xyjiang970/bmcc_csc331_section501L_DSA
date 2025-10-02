@@ -10,22 +10,22 @@ due date Oct 10th, 2025
 
 int main()
 {
-    book_f25 bookList; // Create book list object
-    string transaction;
+    book_f25 bookList;  // Create book_f25 object
+    string transaction; // string variable for user input
     while (true)
     {
         // get transactions input from user
         std::cout << "enter transaction: ";
-        std::getline(cin, transaction);
+        std::getline(cin, transaction); // get entire line of user input
 
         if (transaction.empty())
             continue; // skip empty lines
 
-        // Adds new line for cleaner output formatting
+        // Adds blank new line for cleaner output formatting
         std::cout << std::endl;
 
         // Get specific transaction (A, R, O, S, L, Q)
-        char command = transaction[0];
+        char command = transaction[0]; // extracts first character as the "command"
 
         switch (command)
         {
@@ -33,18 +33,20 @@ int main()
         case 'A':
         {
             // Find first space (after 'A')
-            size_t pos1 = transaction.find(' ');
+            size_t pos1 = transaction.find(' '); // size_t = unsigned integer type (only holds positive #s and 0)
             // Find second space (after ID)
             size_t pos2 = transaction.find(' ', pos1 + 1);
 
-            // Extract ID substring and convert to int
+            // Extract ID substring (between spaces)
             string idStr = transaction.substr(pos1 + 1, pos2 - pos1 - 1);
+
+            // converts to int
             int bookID = stoi(idStr);
 
             // Extract title (everything after second space)
             string title = transaction.substr(pos2 + 1);
 
-            if (bookList.addBook(bookID, title))
+            if (bookList.addBook(bookID, title)) // calls addBook method
                 std::cout << "book added" << std::endl;
             else
                 std::cout << "book not added" << std::endl;
@@ -61,7 +63,7 @@ int main()
             string idStr = transaction.substr(pos + 1);
             int bookID = stoi(idStr);
 
-            if (bookList.removeBook(bookID))
+            if (bookList.removeBook(bookID)) // calls removeBook method
                 std::cout << "book removed" << std::endl;
             else
                 std::cout << "book not removed" << std::endl;
@@ -83,7 +85,7 @@ int main()
             int bookID = stoi(idStr);
             int quantity = stoi(qtyStr);
 
-            if (bookList.orderBooks(bookID, quantity))
+            if (bookList.orderBooks(bookID, quantity)) // calls orderBooks method
                 std::cout << "books ordered" << std::endl;
             else
                 std::cout << "books not ordered" << std::endl;
@@ -105,7 +107,7 @@ int main()
             int bookID = stoi(idStr);
             int quantity = stoi(qtyStr);
 
-            if (bookList.sellBooks(bookID, quantity))
+            if (bookList.sellBooks(bookID, quantity)) // calls sellBooks method
                 std::cout << "books sold" << std::endl;
             else
                 std::cout << "books not sold" << std::endl;
@@ -114,14 +116,14 @@ int main()
 
         // List books
         case 'L':
-            bookList.list();
+            bookList.list(); // calls the list method
             break;
 
         // Quit
-        case 'Q':
+        case 'Q': // terminates the program as shown in instructions
             return 0;
 
-        default:
+        default: // default case (any invalid commands)
             std::cout << "Invalid transaction" << std::endl;
             break;
         }
