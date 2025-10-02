@@ -1,7 +1,19 @@
 /*
-csc331-section_501L prog1 Xin Yu (Jason) Jiang
-assignment_2
-due date Oct 10th, 2025
+Xin Yu (Jason) Jiang
+CSC331, Section: 501L
+Assignment 2
+Due Date: Oct 10th, 2025
+
+Program Name: csc331_501L_prog2_jiang.cpp
+
+Program Purpose:
+Interactive transaction-based linked list data structure using C++ object.
+A transaction will be entered at the command line after a short prompt and
+output will be displayed on the console. Note: a batch of input transactions
+in a plain text file can be processed using redirection.
+
+A linked list of book IDs, titles, and quantities will be created and updated using
+addBook, removeBook, orderBook, sellBook, and list transactions.
 */
 
 #include <iostream>
