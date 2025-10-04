@@ -1,0 +1,6 @@
+Please enter an expression in post-fix notation: 5
+Please enter an expression in post-fix notation: 2.4
+Please enter an expression in post-fix notation: error: division by zero
+Please enter an expression in post-fix notation: 4
+Please enter an expression in post-fix notation: error: non-integer operand for %
+Please enter an expression in post-fix notation: 

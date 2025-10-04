@@ -70,7 +70,19 @@ Runtime errors ───────────────────┘
 ## Windows command prompt commands:
 
 ```bash
+# Windows Command Prompt:
+g++ csc331_501L_prog3_jiang.cpp -o program.exe > output.txt 2>&1 && program.exe >> output.txt 2>&1
 
+## Feeding in a .dat file with pre-specified commands 
+(g++ csc331_501L_prog3_jiang.cpp -o program.exe 2>&1 & program.exe < prog3.dat 2>&1) > output.txt
+
+# ==================================
+
+# Windows Powershell:
+g++ csc331_501L_prog3_jiang.cpp -o program.exe 2>&1 | Out-File output.txt; ./program.exe 2>&1 | Out-File output.txt -Append
+
+## Feeding in a .dat file with pre-specified commands 
+g++ csc331_501L_prog3_jiang.cpp -o program.exe 2>&1 | Out-File output.txt; Get-Content prog3.dat | ./program.exe 2>&1 | Out-File output.txt -Append
 ```
 
 <img src="images/windows_sample_output1.png" alt="windows_sample_output1" width="700"/>
