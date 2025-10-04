@@ -141,7 +141,7 @@ emcc --version
 
 Pro Tip Mac: Add the Emscripten environment to your shell configuration file! (Note: Macs by default use zsh now)
 
-- In .zhrc: add `bash source ~/Desktop/emsdk/emsdk_env.sh  # On Linux/Mac if you git cloned to Desktop `
+- In .zhrc:
 
 ```bash
 # Remove the incorrect line from .zshrc if needed:
