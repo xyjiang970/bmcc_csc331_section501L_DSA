@@ -109,19 +109,21 @@ git clone https://github.com/emscripten-core/emsdk.git
 cd emsdk
 
 # Install latest version
-.\emsdk install latest
+.\emsdk install latest # Windows
+./emsdk install latest # Mac
 
 # Activate it
-.\emsdk activate latest
+.\emsdk activate latest # Windows
+./emsdk activate latest # Mac
 
 # Set up environment variables (do this in each new terminal session)
-source ./emsdk_env.sh  # On Linux/Mac
+source ~/Desktop/emsdk/emsdk_env.sh  # On Linux/Mac if you git cloned to Desktop
 # OR
 emsdk_env.bat          # On Windows
 .\emsdk_env.bat
 ```
 
-Pro Tip: Add to PATH Permanently on Windows!
+Pro Tip Windows: Add to PATH Permanently on Windows!
 To avoid running emsdk_env.bat every time, you can add Emscripten to your system PATH:
 
 1. Search for "Environment Variables" in Windows
@@ -136,6 +138,38 @@ Verify Installation:
 ```bash
 emcc --version
 ```
+
+Pro Tip Mac: Add the Emscripten environment to your shell configuration file! (Note: Macs by default use zsh now)
+
+- In .zhrc: add `bash source ~/Desktop/emsdk/emsdk_env.sh  # On Linux/Mac if you git cloned to Desktop `
+
+```bash
+# Remove the incorrect line from .zshrc if needed:
+nano ~/.zshrc
+
+# After deleting the line with the wrong path, add:
+source ~/Desktop/emsdk/emsdk_env.sh
+
+# Save (Ctrl+O, Enter, Ctrl+X)
+
+# Reload your shell config
+source ~/.zshrc
+```
+
+- In .bash_profile:
+
+````bash
+# Open bash config file
+nano ~/.bash_profile
+
+# Add this line at the end:
+source ~/Desktop/emsdk/emsdk_env.sh
+
+# Save (Ctrl+O, Enter, Ctrl+X)
+
+# Reload
+source ~/.bash_profile
+```bash
 
 ### Step 2: Modify Your C++ Code for Web
 
@@ -160,7 +194,7 @@ emcc .\csc331_501L_prog3_jiang_web.cpp -o postfix_calculator.js -s WASM=1 -lembi
 # This will generate two files:
 # .js (JavaScript glue code)
 # .wasm (WebAssembly binary)
-```
+````
 
 ### Step 6: Test Locally
 
