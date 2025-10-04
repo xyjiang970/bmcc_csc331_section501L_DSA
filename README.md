@@ -1,4 +1,4 @@
-# bmcc_csc311_section501L_DSA
+# bmcc_csc331_section501L_DSA
 
 ## Mac terminal commands:
 
