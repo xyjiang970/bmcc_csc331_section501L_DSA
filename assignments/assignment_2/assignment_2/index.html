@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Postfix Expression Evaluator | CSC331</title>
-    <link rel="stylesheet" type="text/css" href="../../../stylesheets/assignment3_index.css">
+    <title>Book Management System | CSC331</title>
+    <link rel="stylesheet" type="text/css" href="../../../stylesheets/assignment2_index.css">
 </head>
 <body>
     <div class="container">
         <a href="../../../index.html" class="back-button">← Back to Assignments</a>
-        <h1>🧮 Postfix Expression Evaluator</h1>
+        <h1>📚 Book Management System</h1>
         
         <div class="info-box">
             <h3>About This Program</h3>
             <p><strong>Course:</strong> CSC331 - Data Structures & Algorithms | Section 501L</p>
-            <p><strong>Assignment:</strong> Program 3: Stack Implementation</p>
+            <p><strong>Assignment:</strong> Program 2: Linked List Implementation</p>
             <p><strong>Author:</strong> Xin Yu (Jason) Jiang</p>
         </div>
         
         <div class="examples">
-            <h3>📝 How to Use</h3>
-            <p>Type one or more postfix expressions in the input box (one per line), then click "Evaluate All".</p>
-            <p><strong>Supported Operators:</strong> <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code> <code>^</code></p>
-            <p><strong>Preset Examples:</strong></p>
-            <ul style="margin: 10px 0 0 20px;">
-                <li><code>23+</code></li>
-                <li><code>34*5/</code></li>
-                <li><code>832*6-/</code></li>
-                <li><code>48*62*42^3+-%</code></li>
-                <li><code>92/73/5%4/+</code></li>
+            <h3>📖 How to Use</h3>
+            <p>Enter transactions in the input box (one per line), then click "Process All".</p>
+            <p><strong>Supported Transactions:</strong></p>
+            <ul style="margin: 10px 0 0 20px; line-height: 1.8;">
+                <li><code>A [ID] [Title]</code> - Add a new book</li>
+                <li><code>R [ID]</code> - Remove a book</li>
+                <li><code>O [ID] [Quantity]</code> - Order books (increase inventory)</li>
+                <li><code>S [ID] [Quantity]</code> - Sell books (decrease inventory)</li>
+                <li><code>L</code> - List all books</li>
+                <li><code>C</code> - Clear the book list</li>
+            </ul>
+            <p style="margin-top: 10px;"><strong>Preset Examples:</strong></p>
+            <ul style="margin: 5px 0 0 20px;">
+                <li><code>A 101 Introduction to Programming</code></li>
+                <li><code>A 202 Data Structures</code></li>
+                <li><code>O 101 50</code></li>
+                <li><code>S 101 10</code></li>
+                <li><code>L</code></li>
             </ul>
         </div>
         
@@ -39,15 +47,18 @@
         
         <div class="terminal-grid" id="terminalGrid" style="display: none;">
             <div class="terminal-panel">
-                <div class="panel-header">⌨️ Input Terminal</div>
+                <div class="panel-header">⌨️ Transaction Input</div>
                 <div class="panel-body">
-                    <textarea id="inputArea">23+
-34*5/
-832*6-/
-48*62*42^3+-%
-92/73/5%4/+</textarea>
+                    <textarea id="inputArea">A 101 Introduction to Programming
+A 202 Data Structures and Algorithms
+A 303 Database Systems
+O 101 50
+O 202 30
+O 303 25
+S 101 5
+L</textarea>
                     <div class="input-controls">
-                        <button class="btn btn-primary" id="evalBtn" onclick="evaluateAll()">Evaluate All</button>
+                        <button class="btn btn-primary" id="processBtn" onclick="processAllTransactions()">Process All</button>
                         <button class="btn btn-secondary" onclick="clearAll()">Clear</button>
                     </div>
                 </div>
@@ -75,7 +86,7 @@
                 document.getElementById('status').style.display = 'none';
                 document.getElementById('terminalGrid').style.display = 'grid';
                 document.getElementById('inputArea').focus();
-                addOutput('✓ Ready! Enter expressions and click "Evaluate All".', 'info');
+                addOutput('✓ Ready! Enter transactions and click "Process All".', 'info');
             }
         };
         
@@ -93,6 +104,10 @@
             } else if (type === 'error') {
                 line.className += ' output-error';
                 line.textContent = '✗ ' + text;
+            } else if (type === 'list') {
+                line.className += ' output-list';
+                line.style.whiteSpace = 'pre-wrap';
+                line.textContent = text;
             } else if (type === 'info') {
                 line.style.color = '#858585';
                 line.textContent = text;
@@ -104,45 +119,56 @@
             outputArea.scrollTop = outputArea.scrollHeight;
         }
         
-        function evaluateAll() {
+        function processAllTransactions() {
             if (!moduleReady) {
                 addOutput('Module still loading, please wait...', 'error');
                 return;
             }
             
             const inputArea = document.getElementById('inputArea');
-            const expressions = inputArea.value
+            const transactions = inputArea.value
                 .split('\n')
-                .map(e => e.trim())
-                .filter(e => e.length > 0);
+                .map(t => t.trim())
+                .filter(t => t.length > 0);
             
-            if (expressions.length === 0) {
-                addOutput('Please enter at least one expression.', 'error');
+            if (transactions.length === 0) {
+                addOutput('Please enter at least one transaction.', 'error');
                 return;
             }
             
             addOutput('─'.repeat(60), 'info');
-            addOutput('Evaluating ' + expressions.length + ' expression(s)...', 'info');
+            addOutput('Processing ' + transactions.length + ' transaction(s)...', 'info');
             addOutput('─'.repeat(60), 'info');
             
-            expressions.forEach((expr) => {
-                addOutput(expr, 'input');
+            transactions.forEach((transaction) => {
+                addOutput(transaction, 'input');
                 
                 try {
-                    const result = Module.evaluateExpression(expr);
+                    const result = Module.processTransaction(transaction);
                     
-                    if (result.startsWith('error')) {
+                    // Special handling for list command
+                    if (result === '__LIST_BOOKS__') {
+                        const bookList = Module.getBookList();
+                        if (bookList.trim().length === 0) {
+                            addOutput('(empty list)', 'list');
+                        } else {
+                            addOutput(bookList, 'list');
+                        }
+                    } else if (result.startsWith('Invalid') || result.includes('not')) {
                         addOutput(result, 'error');
                     } else {
-                        addOutput('Result: ' + result, 'result');
+                        addOutput(result, 'result');
                     }
                 } catch (e) {
                     addOutput('Error: ' + e.message, 'error');
                 }
+                
+                // Add small spacing between transactions
+                addOutput('', 'info');
             });
             
             addOutput('─'.repeat(60), 'info');
-            addOutput('✓ Evaluation complete!', 'info');
+            addOutput('✓ Processing complete!', 'info');
         }
         
         function clearAll() {
@@ -152,21 +178,21 @@
             document.getElementById('inputArea').focus();
         }
         
-        // Allow Enter in textarea to stay as newline, not trigger evaluate
+        // Allow Enter in textarea to stay as newline, not trigger process
         document.addEventListener('DOMContentLoaded', function() {
             const inputArea = document.getElementById('inputArea');
             if (inputArea) {
                 inputArea.addEventListener('keydown', function(e) {
-                    // Ctrl/Cmd + Enter to evaluate
+                    // Ctrl/Cmd + Enter to process
                     if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
                         e.preventDefault();
-                        evaluateAll();
+                        processAllTransactions();
                     }
                 });
             }
         });
     </script>
     
-    <script src="postfix_calculator.js"></script>
+    <script src="book_manager.js"></script>
 </body>
 </html>

@@ -73,7 +73,7 @@ Runtime errors ───────────────────┘
 # Windows Command Prompt:
 g++ csc331_501L_prog3_jiang.cpp -o program.exe > output.txt 2>&1 && program.exe >> output.txt 2>&1
 
-## Feeding in a .dat file with pre-specified commands 
+## Feeding in a .dat file with pre-specified commands
 (g++ csc331_501L_prog3_jiang.cpp -o program.exe 2>&1 & program.exe < prog3.dat 2>&1) > output.txt
 
 # ==================================
@@ -81,9 +81,103 @@ g++ csc331_501L_prog3_jiang.cpp -o program.exe > output.txt 2>&1 && program.exe 
 # Windows Powershell:
 g++ csc331_501L_prog3_jiang.cpp -o program.exe 2>&1 | Out-File output.txt; ./program.exe 2>&1 | Out-File output.txt -Append
 
-## Feeding in a .dat file with pre-specified commands 
+## Feeding in a .dat file with pre-specified commands
 g++ csc331_501L_prog3_jiang.cpp -o program.exe 2>&1 | Out-File output.txt; Get-Content prog3.dat | ./program.exe 2>&1 | Out-File output.txt -Append
 ```
 
 <img src="images/windows_sample_output1.png" alt="windows_sample_output1" width="700"/>
 <img src="images/windows_sample_output2.png" alt="windows_sample_output2" width="700"/>
+
+## Using Emscripten SDK Guide:
+
+"Emscripten is a complete compiler toolchain to WebAssembly, using LLVM, with a special focus on speed, size, and the Web platform."
+
+Make sure github pages is enabled and repo is public!
+
+### Step 1: Install Emscripten (on desktop/ local machine - DO NOT INSTALL IN REPO FOLDER)
+
+Every time you open a new terminal, you need to activate Emscripten before using emcc every terminal session!
+
+```bash
+# Navigate to Desktop (or wherever you want to install it)
+cd C:\Users\Jason\Desktop
+
+# Clone emsdk
+git clone https://github.com/emscripten-core/emsdk.git
+
+# Enter the directory
+cd emsdk
+
+# Install latest version
+.\emsdk install latest
+
+# Activate it
+.\emsdk activate latest
+
+# Set up environment variables (do this in each new terminal session)
+source ./emsdk_env.sh  # On Linux/Mac
+# OR
+emsdk_env.bat          # On Windows
+.\emsdk_env.bat
+```
+
+Pro Tip: Add to PATH Permanently on Windows!
+To avoid running emsdk_env.bat every time, you can add Emscripten to your system PATH:
+
+1. Search for "Environment Variables" in Windows
+2. Click "Environment Variables"
+3. Under "User variables", select "Path" and click "Edit"
+4. Click "New" and add: C:\Users\Jason\Desktop\emsdk\upstream\emscripten
+5. Click OK on all dialogs
+6. Restart your terminal
+
+Verify Installation:
+
+```bash
+emcc --version
+```
+
+### Step 2: Modify Your C++ Code for Web
+
+- Add one function - evaluateExpression() that JavaScript can call
+- Use #ifdef **EMSCRIPTEN** - web code only compiles for web, not terminal
+- Modify the C++ file to exclude main() when compiling for web
+- No prompt() dialogs!
+
+### Step 3: Create the HTML Interface
+
+In the same folder, create index.html
+
+### Step 4: Compile Your Code
+
+```bash
+# Navigate to your assignment directory/ project
+cd C:\Users\Jason\Desktop\bmcc_csc331_section501L_DSA\assignments\assignment_3\assignment_3
+
+# Compile the C++ code to WebAssembly
+emcc .\csc331_501L_prog3_jiang_web.cpp -o postfix_calculator.js -s WASM=1 -lembind -s ALLOW_MEMORY_GROWTH=1 -s INVOKE_RUN=0 -s EXPORTED_RUNTIME_METHODS='["cwrap","ccall"]'
+
+# This will generate two files:
+# .js (JavaScript glue code)
+# .wasm (WebAssembly binary)
+```
+
+### Step 6: Test Locally
+
+```bash
+# Still in the main.cpp directory:
+
+# Option 1: Python
+python3 -m http.server 8000
+
+# Option 2: Python 2
+python -m SimpleHTTPServer 8000
+
+# Option 3: Node.js (if installed)
+npx http-server -p 8000
+
+# Option 4: PHP (if installed)
+php -S localhost:8000
+```
+
+Then open your browser to: (e.g. http://localhost:8000/postfix_calculator.html)
