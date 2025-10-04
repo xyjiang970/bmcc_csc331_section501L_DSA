@@ -32,11 +32,15 @@
             </ul>
             <p style="margin-top: 10px;"><strong>Preset Examples:</strong></p>
             <ul style="margin: 5px 0 0 20px;">
-                <li><code>A 101 Introduction to Programming</code></li>
-                <li><code>A 202 Data Structures</code></li>
-                <li><code>O 101 50</code></li>
-                <li><code>S 101 10</code></li>
-                <li><code>L</code></li>
+                <li><code>A 10 book1</code> - Add book with ID 10</li>
+                <li><code>A 10 book2</code> - Try adding duplicate ID</li>
+                <li><code>A 20 book3</code> - Add book with ID 20</li>
+                <li><code>L</code> - List all books</li>
+                <li><code>R 30</code> - Try removing non-existent book</li>
+                <li><code>R 10</code> - Remove book with ID 10</li>
+                <li><code>O 10 7</code> - Order books (tests non-existent book)</li>
+                <li><code>O 20 7</code> - Order 7 copies of book 20</li>
+                <li><code>L</code> - List books again</li>
             </ul>
         </div>
         
@@ -49,13 +53,14 @@
             <div class="terminal-panel">
                 <div class="panel-header">⌨️ Transaction Input</div>
                 <div class="panel-body">
-                    <textarea id="inputArea">A 101 Introduction to Programming
-A 202 Data Structures and Algorithms
-A 303 Database Systems
-O 101 50
-O 202 30
-O 303 25
-S 101 5
+                    <textarea id="inputArea">A 10 book1
+A 10 book2
+A 20 book3
+L
+R 30
+R 10
+O 10 7
+O 20 7
 L</textarea>
                     <div class="input-controls">
                         <button class="btn btn-primary" id="processBtn" onclick="processAllTransactions()">Process All</button>
