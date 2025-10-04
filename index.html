@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSC331 - Data Structures & Algorithms | Jason Jiang</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: #333;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            color: #666;
+            font-size: 1.2em;
+        }
+        
+        .course-info {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .course-info h2 {
+            margin-bottom: 15px;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+        
+        .info-item {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 10px 15px;
+            border-radius: 6px;
+        }
+        
+        .info-item strong {
+            display: block;
+            margin-bottom: 5px;
+        }
+        
+        .assignments-section {
+            margin-top: 40px;
+        }
+        
+        .assignments-section h2 {
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #667eea;
+        }
+        
+        .assignment-card {
+            background: #f8f9fa;
+            border: 2px solid #e9ecef;
+            border-radius: 8px;
+            padding: 25px;
+            margin: 20px 0;
+            transition: all 0.3s ease;
+        }
+        
+        .assignment-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.3);
+            border-color: #667eea;
+        }
+        
+        .assignment-card h3 {
+            color: #667eea;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        
+        .assignment-meta {
+            color: #666;
+            font-size: 0.9em;
+            margin-bottom: 15px;
+        }
+        
+        .assignment-card p {
+            color: #555;
+            line-height: 1.6;
+            margin-bottom: 15px;
+        }
+        
+        .tech-stack {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin: 15px 0;
+        }
+        
+        .tech-badge {
+            background: #667eea;
+            color: white;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: transform 0.2s;
+            font-weight: 600;
+            margin-right: 10px;
+        }
+        
+        .btn:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
+        }
+        
+        .btn-secondary {
+            background: white;
+            color: #667eea;
+            border: 2px solid #667eea;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            padding-top: 30px;
+            border-top: 2px solid #e9ecef;
+            color: #666;
+        }
+        
+        footer a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🎓 CSC331</h1>
+            <p class="subtitle">Data Structures & Algorithms</p>
+        </header>
+        
+        <div class="course-info">
+            <h2>Course Information</h2>
+            <div class="info-grid">
+                <div class="info-item">
+                    <strong>Student</strong>
+                    Xin Yu (Jason) Jiang
+                </div>
+                <div class="info-item">
+                    <strong>Section</strong>
+                    501L
+                </div>
+                <div class="info-item">
+                    <strong>Institution</strong>
+                    BMCC, CUNY
+                </div>
+                <div class="info-item">
+                    <strong>Semester</strong>
+                    Fall 2025
+                </div>
+            </div>
+        </div>
+        
+        <section class="assignments-section">
+            <h2>📚 Programming Assignments</h2>
+            
+            <div class="assignment-card">
+                <h3>Assignment 3: Stack Implementation</h3>
+                <div class="assignment-meta">
+                    Due: October 31, 2025 | Status: ✅ Completed
+                </div>
+                <p>
+                    An interactive postfix (Reverse Polish Notation) expression evaluator implemented in C++ 
+                    and compiled to WebAssembly. This program uses a linked-list based stack data structure 
+                    to parse and evaluate arithmetic expressions with full error handling.
+                </p>
+                <p><strong>Features:</strong></p>
+                <ul style="margin-left: 20px; margin-bottom: 15px; line-height: 1.8;">
+                    <li>Stack-based expression evaluation</li>
+                    <li>Support for operators: +, -, *, /, %, ^</li>
+                    <li>Division by zero detection</li>
+                    <li>Integer validation for modulus operations</li>
+                    <li>Runs natively in the browser (no installation required)</li>
+                </ul>
+                <div class="tech-stack">
+                    <span class="tech-badge">C++</span>
+                    <span class="tech-badge">WebAssembly</span>
+                    <span class="tech-badge">Emscripten</span>
+                    <span class="tech-badge">Data Structures</span>
+                    <span class="tech-badge">Stack ADT</span>
+                </div>
+                <a href="assignments/assignment_3/assignment_3/index.html" class="btn">Launch Application →</a>
+                <a href="https://github.com/xyjiang970/bmcc_csc331_section501L_DSA/tree/main/assignments/assignment_3/assignment_3" class="btn btn-secondary" target="_blank">View Code</a>
+            </div>
+            
+            <!-- Placeholder for future assignments -->
+            <div class="assignment-card" style="opacity: 0.6;">
+                <h3>Assignment 2: Coming Soon</h3>
+                <div class="assignment-meta">
+                    Status: 🚧 In Progress
+                </div>
+                <p>More assignments will be added as the semester progresses...</p>
+            </div>
+        </section>
+        
+        <footer>
+            <p><strong>GitHub Repository:</strong> <a href="https://github.com/xyjiang970/bmcc_csc331_section501L_DSA" target="_blank">xyjiang970/bmcc_csc331_section501L_DSA</a></p>
+            <p style="margin-top: 10px;">Powered by GitHub Pages • Built with HTML, CSS, and WebAssembly</p>
+        </footer>
+    </div>
+</body>
+</html>

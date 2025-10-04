@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Postfix Expression Evaluator | CSC331</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            padding: 30px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+        }
+        
+        h1 {
+            color: #333;
+            margin-top: 0;
+            border-bottom: 3px solid #667eea;
+            padding-bottom: 15px;
+        }
+        
+        .info-box {
+            background: #f8f9fa;
+            border-left: 4px solid #667eea;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .info-box h3 {
+            margin-top: 0;
+            color: #667eea;
+        }
+        
+        .examples {
+            background: #fff9e6;
+            border-left: 4px solid #ffc107;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .examples h3 {
+            margin-top: 0;
+            color: #856404;
+        }
+        
+        code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        /* Terminal styling */
+        #output {
+            width: 100%;
+            height: 400px;
+            background-color: #1e1e1e;
+            color: #d4d4d4;
+            font-family: 'Courier New', Consolas, monospace;
+            font-size: 14px;
+            padding: 15px;
+            border-radius: 6px;
+            overflow-y: auto;
+            box-sizing: border-box;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+            margin: 20px 0;
+            border: 2px solid #333;
+        }
+        
+        .terminal-header {
+            background: #2d2d2d;
+            color: #d4d4d4;
+            padding: 10px 15px;
+            border-radius: 6px 6px 0 0;
+            font-weight: 600;
+            margin-top: 20px;
+        }
+        
+        #canvas {
+            display: none;
+        }
+        
+        .spinner {
+            border: 3px solid #f3f3f3;
+            border-top: 3px solid #667eea;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        #status {
+            text-align: center;
+            color: #667eea;
+            font-weight: 600;
+            margin: 10px 0;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .note {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .note strong {
+            color: #1976D2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧮 Postfix Expression Evaluator</h1>
+        
+        <div class="info-box">
+            <h3>About This Program</h3>
+            <p><strong>Course:</strong> CSC331 - Data Structures & Algorithms | Section 501L</p>
+            <p><strong>Assignment:</strong> Program 3 - Stack Implementation</p>
+            <p><strong>Author:</strong> Xin Yu (Jason) Jiang</p>
+            <p><strong>Due Date:</strong> October 31st, 2025</p>
+        </div>
+        
+        <div class="examples">
+            <h3>📝 How to Use</h3>
+            <p>This is your original C++ program running in the browser! Type expressions in the terminal below.</p>
+            <p><strong>Supported Operators:</strong> <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code> <code>^</code></p>
+            <p><strong>Examples:</strong></p>
+            <ul>
+                <li><code>23+</code> → evaluates to 5 (2 + 3)</li>
+                <li><code>34*5+</code> → evaluates to 17 ((3 * 4) + 5)</li>
+                <li><code>95-</code> → evaluates to 4 (9 - 5)</li>
+                <li><code>23^</code> → evaluates to 8 (2³)</li>
+                <li><code>84/2-</code> → evaluates to 2 ((8 / 4) - 2)</li>
+            </ul>
+        </div>
+        
+        <div class="note">
+            <strong>💡 Tip:</strong> To exit the program, press <code>Ctrl+D</code> (Linux/Mac) or type <code>end-of-file</code> and press Enter.
+        </div>
+        
+        <div class="terminal-header">
+            🖥️ Terminal Output
+        </div>
+        
+        <div id="output"></div>
+        <canvas id="canvas" oncontextmenu="event.preventDefault()"></canvas>
+        
+        <div id="status">
+            <div class="spinner"></div>
+            Loading WebAssembly module...
+        </div>
+    </div>
+    
+    <footer>
+        <p>Powered by C++ compiled to WebAssembly with Emscripten</p>
+        <p><a href="https://github.com/xyjiang970/bmcc_csc331_section501L_DSA" target="_blank">View Source on GitHub</a></p>
+    </footer>
+    
+    <script>
+        var Module = {
+            preRun: [],
+            postRun: [],
+            print: (function() {
+                var element = document.getElementById('output');
+                if (element) element.value = ''; // clear browser cache
+                return function(text) {
+                    if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                    console.log(text);
+                    if (element) {
+                        element.textContent += text + "\n";
+                        element.scrollTop = element.scrollHeight; // scroll to bottom
+                    }
+                };
+            })(),
+            printErr: function(text) {
+                if (arguments.length > 1) text = Array.prototype.slice.call(arguments).join(' ');
+                console.error(text);
+            },
+            canvas: (function() {
+                var canvas = document.getElementById('canvas');
+                return canvas;
+            })(),
+            setStatus: function(text) {
+                var statusElement = document.getElementById('status');
+                if (!text) {
+                    statusElement.style.display = 'none';
+                } else {
+                    statusElement.innerHTML = text;
+                }
+            },
+            totalDependencies: 0,
+            monitorRunDependencies: function(left) {
+                this.totalDependencies = Math.max(this.totalDependencies, left);
+                Module.setStatus(left ? 'Preparing... (' + (this.totalDependencies-left) + '/' + this.totalDependencies + ')' : '');
+            }
+        };
+        
+        Module.setStatus('Downloading...');
+        
+        window.onerror = function(event) {
+            Module.setStatus('Exception thrown, see JavaScript console');
+            Module.setStatus = function(text) {
+                if (text) Module.printErr('[post-exception status] ' + text);
+            };
+        };
+    </script>
+    
+    <!-- Load the compiled module -->
+    <script async type="text/javascript" src="postfix_calculator.js"></script>
+</body>
+</html>
