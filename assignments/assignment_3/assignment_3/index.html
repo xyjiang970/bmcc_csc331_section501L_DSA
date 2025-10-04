@@ -239,12 +239,13 @@
             <h3>📝 How to Use</h3>
             <p>Type one or more postfix expressions in the input box (one per line), then click "Evaluate All".</p>
             <p><strong>Supported Operators:</strong> <code>+</code> <code>-</code> <code>*</code> <code>/</code> <code>%</code> <code>^</code></p>
-            <p><strong>Examples:</strong></p>
+            <p><strong>Preset Examples:</strong></p>
             <ul style="margin: 10px 0 0 20px;">
-                <li><code>23+</code> → 5 (2 + 3)</li>
-                <li><code>34*5+</code> → 17 ((3 × 4) + 5)</li>
-                <li><code>95-</code> → 4 (9 - 5)</li>
-                <li><code>23^</code> → 8 (2³)</li>
+                <li><code>23+</code></li>
+                <li><code>34*5/</code></li>
+                <li><code>832*6-/</code></li>
+                <li><code>48*62*42^3+-%</code></li>
+                <li><code>92/73/5%4/+</code></li>
             </ul>
         </div>
         
@@ -257,14 +258,11 @@
             <div class="terminal-panel">
                 <div class="panel-header">⌨️ Input Terminal</div>
                 <div class="panel-body">
-                    <textarea id="inputArea" placeholder="Enter postfix expressions (one per line)...
-
-Example:
-23+
-34*5+
-95-
-23^
-84/2-"></textarea>
+                    <textarea id="inputArea">23+
+34*5/
+832*6-/
+48*62*42^3+-%
+92/73/5%4/+</textarea>
                     <div class="input-controls">
                         <button class="btn btn-primary" id="evalBtn" onclick="evaluateAll()">Evaluate All</button>
                         <button class="btn btn-secondary" onclick="clearAll()">Clear</button>

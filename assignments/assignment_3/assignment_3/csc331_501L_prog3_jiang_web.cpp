@@ -153,7 +153,8 @@ void evaluatePostfix(std::string expression)
     }
 }
 
-// ORIGINAL MAIN - unchanged for local/terminal use
+// ORIGINAL MAIN - only compiled for terminal use (not web)
+#ifndef __EMSCRIPTEN__
 int main()
 {
     std::string expression;
@@ -182,6 +183,7 @@ int main()
 
     return 0;
 }
+#endif
 
 #ifdef __EMSCRIPTEN__
 // WEB-ONLY: Function exposed to JavaScript (does not affect terminal version)
