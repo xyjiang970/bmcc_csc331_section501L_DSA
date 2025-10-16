@@ -169,7 +169,7 @@ source ~/Desktop/emsdk/emsdk_env.sh
 
 # Reload
 source ~/.bash_profile
-```bash
+```
 
 ### Step 2: Modify Your C++ Code for Web
 
