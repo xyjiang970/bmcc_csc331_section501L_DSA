@@ -158,7 +158,7 @@ source ~/.zshrc
 
 - In .bash_profile:
 
-````bash
+```bash
 # Open bash config file
 nano ~/.bash_profile
 
@@ -194,7 +194,7 @@ emcc .\csc331_501L_prog3_jiang_web.cpp -o postfix_calculator.js -s WASM=1 -lembi
 # This will generate two files:
 # .js (JavaScript glue code)
 # .wasm (WebAssembly binary)
-````
+```
 
 ### Step 6: Test Locally
 
