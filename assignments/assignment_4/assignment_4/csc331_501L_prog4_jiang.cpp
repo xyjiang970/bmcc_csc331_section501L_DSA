@@ -17,8 +17,8 @@ This program implements an interactive ticket scheduling application using an ar
 
 #include "heap331_f25.h"
 
-// Global sequence counter to maintain FIFO order (within same priority level)
-int globalSequence = 0;
+// sequence counter to maintain FIFO order (within same priority level)
+int sequence = 0;
 
 /*
 Determines priority level based on age.
@@ -31,7 +31,7 @@ Returns: priority value (1 = highest, 3 = lowest).
 Priority Rules:
 - Children (age < 16): Priority 1 (highest)
 - Seniors (age > 64): Priority 2 (middle)
-- Others (16 <= age <= 64): Priority 3 (lowest)
+- All others (16 <= age <= 64): Priority 3 (lowest)
 */
 int calculatePriority(int age)
 {
@@ -85,6 +85,7 @@ std::string padWithZeros(int num, int width)
     {
         result = "0" + result;
     }
+
     return result;
 }
 
@@ -106,6 +107,7 @@ std::string createHeapString(int priority, int sequence, const std::string &name
 {
     // Format: "Priority_SequenceNumber(5digits)_Name"
     std::string result = std::to_string(priority) + "_" + padWithZeros(sequence, 5) + "_" + name;
+
     return result;
 }
 
@@ -139,7 +141,6 @@ std::string extractNameFromHeapString(const std::string &heapString)
     {
         return heapString; // Fallback if format is unexpected
     }
-
     // Extract everything after the second underscore (the name)
     return heapString.substr(secondUnderscore + 1);
 }
@@ -264,10 +265,10 @@ int main()
                     int priority = calculatePriority(age);
 
                     // Create the encoded heap string with priority, sequence, and name
-                    std::string heapString = createHeapString(priority, globalSequence, name);
+                    std::string heapString = createHeapString(priority, sequence, name);
 
                     // Increment global sequence counter for next ticket
-                    globalSequence++;
+                    sequence++;
 
                     // Add ticket to priority queue
                     ticketQueue.push(heapString);
