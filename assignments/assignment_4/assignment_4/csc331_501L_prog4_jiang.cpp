@@ -33,7 +33,7 @@ Priority Rules:
 - Seniors (age > 64): Priority 2 (middle)
 - All others (16 <= age <= 64): Priority 3 (lowest)
 */
-int calculatePriority(int age)
+int calculatePrio(int age)
 {
     if (age < 16)
     {
@@ -119,7 +119,7 @@ Parameters:
 
 Returns: the customer name.
  */
-std::string extractNameFromHeapString(const std::string &heapString)
+std::string getNameFromHeapString(const std::string &heapString)
 {
     // Find the second underscore (after priority and sequence)
     /*
@@ -155,7 +155,7 @@ Parameters:
 
 Returns: true if parsing successful, false otherwise.
 */
-bool parseTicketRequest(const std::string &input, std::string &name, int &age)
+bool getTicketRequest(const std::string &input, std::string &name, int &age)
 {
     // Find the comma separator
     /*
@@ -236,7 +236,7 @@ int main()
                 std::string heapString = ticketQueue.front();
 
                 // Extract the customer name from the encoded string
-                std::string name = extractNameFromHeapString(heapString);
+                std::string name = getNameFromHeapString(heapString);
 
                 // Remove ticket from queue
                 ticketQueue.pop();
@@ -252,7 +252,7 @@ int main()
             int age;          // Variable to store parsed age
 
             // Parse the ticket request (format: "name,age")
-            if (parseTicketRequest(input, name, age))
+            if (getTicketRequest(input, name, age))
             {
                 // Check if queue is full (maximum 10 tickets)
                 if (ticketQueue.full())
@@ -262,7 +262,7 @@ int main()
                 else
                 {
                     // Calculate priority level based on age
-                    int priority = calculatePriority(age);
+                    int priority = calculatePrio(age);
 
                     // Create the encoded heap string with priority, sequence, and name
                     std::string heapString = createHeapString(priority, sequence, name);
