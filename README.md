@@ -83,6 +83,8 @@ g++ csc331_501L_prog3_jiang.cpp -o program.exe 2>&1 | Out-File output.txt; ./pro
 
 ## Feeding in a .dat file with pre-specified commands
 g++ csc331_501L_prog3_jiang.cpp -o program.exe 2>&1 | Out-File output.txt; Get-Content prog3.dat | ./program.exe 2>&1 | Out-File output.txt -Append
+
+g++ csc331_501L_prog5_jiang.cpp -o program.exe; ./program.exe graph1.dat > output.txt 2>&1
 ```
 
 <img src="images/windows_sample_output1.png" alt="windows_sample_output1" width="700"/>
